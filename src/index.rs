@@ -19,6 +19,9 @@ pub trait Index {
     /// Returns a Vec of `(id, distance)` pairs sorted by distance ascending.
     fn search(&self, query: &Vector, k: usize) -> Result<Vec<(usize, f32)>>;
 
+    /// Retrieve a vector by its internal ID.
+    fn get_vector(&self, id: usize) -> Option<&Vector>;
+
     /// The distance metric used by this index.
     fn metric(&self) -> DistanceMetric;
 

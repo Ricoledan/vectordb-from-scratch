@@ -27,6 +27,7 @@ criterion = { version = "0.5", features = ["html_reports"] }
 proptest = "1.4"
 approx = "0.5"
 tempfile = "3.8"
+tower = { version = "0.4", features = ["util"] }
 
 [[bench]]
 name = "search_bench"

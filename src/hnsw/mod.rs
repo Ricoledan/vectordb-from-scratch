@@ -62,6 +62,10 @@ impl Index for HnswIndex {
         self.graph.remove(id)
     }
 
+    fn get_vector(&self, id: usize) -> Option<&Vector> {
+        self.graph.get_vector(id)
+    }
+
     fn search(&self, query: &Vector, k: usize) -> Result<Vec<(usize, f32)>> {
         let results = self.graph.search_knn(query, k, 50)?; // default ef_search=50
         Ok(results.into_iter().map(|n| (n.id, n.distance)).collect())
@@ -92,6 +96,16 @@ mod tests {
         assert_eq!(results.len(), 2);
         assert_eq!(results[0].0, 0); // exact match
         assert!(results[0].1 < 1e-5);
+    }
+
+    #[test]
+    fn test_hnsw_get_vector() {
+        let mut index = HnswIndex::new(DistanceMetric::Euclidean);
+        let v = Vector::new(vec![1.0, 2.0, 3.0]);
+        index.add(0, v.clone()).unwrap();
+
+        assert_eq!(index.get_vector(0), Some(&v));
+        assert_eq!(index.get_vector(99), None);
     }
 
     #[test]

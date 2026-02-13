@@ -45,6 +45,10 @@ impl Index for FlatIndex {
         Ok(())
     }
 
+    fn get_vector(&self, id: usize) -> Option<&Vector> {
+        self.vectors.get(&id)
+    }
+
     fn search(&self, query: &Vector, k: usize) -> Result<Vec<(usize, f32)>> {
         let mut results: Vec<(usize, f32)> = self
             .vectors
@@ -86,6 +90,16 @@ mod tests {
         assert_eq!(results.len(), 2);
         assert_eq!(results[0].0, 0); // exact match
         assert!(results[0].1 < 1e-6);
+    }
+
+    #[test]
+    fn test_flat_index_get_vector() {
+        let mut index = FlatIndex::new(DistanceMetric::Euclidean);
+        let v = Vector::new(vec![1.0, 2.0, 3.0]);
+        index.add(0, v.clone()).unwrap();
+
+        assert_eq!(index.get_vector(0), Some(&v));
+        assert_eq!(index.get_vector(99), None);
     }
 
     #[test]
