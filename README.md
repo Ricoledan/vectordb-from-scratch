@@ -180,6 +180,16 @@ Filters are composable JSON expressions using a tagged `"op"` field:
 ]}
 ```
 
+### Demo
+
+Run the interactive demo script to see every API endpoint in action:
+
+```bash
+bash examples/demo.sh
+```
+
+It builds the project, starts the server, and walks through inserts, searches, filtered searches, batch operations, deletions, and metrics — with clear output at each step.
+
 ### Benchmarks
 
 ```bash
@@ -241,6 +251,8 @@ vectordb-from-scratch/
 │   └── server/
 │       ├── mod.rs               # Server startup
 │       └── routes.rs            # HTTP endpoint handlers
+├── examples/
+│   └── demo.sh                  # Interactive API demo script
 ├── tests/
 │   ├── integration_test.rs      # End-to-end workflow tests
 │   └── recall_test.rs           # HNSW recall benchmarks
